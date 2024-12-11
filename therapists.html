@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Therapists Near You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f8f3;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Header container for logo and title */
+    header {
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      background-color: #f8f8f3;
+    }
+
+    /* Logo styling */
+    header img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    /* Title styling */
+    header h1.logo-title {
+      color: #cd7671;
+      font-size: 20px;
+      margin: 0px;
+    }
+
+    header h2 {
+      color: #000000;
+      padding: 10px 20px;
+    }
+    header h2 {
+      margin: 0;
+    }
+
+    nav {
+      background-color: #534566;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #f8efba;
+      font-size: 16px;
+      font-weight: 400;
+      padding-bottom: 5px;
+      transition: color 0.3s ease, font-weight 0.3s ease;
+    }
+
+    nav ul li.active a {
+      color: #fcee96;
+      font-weight: bold;
+      border-bottom: 5px solid #fcee96;
+      padding-bottom: 3px;
+      border-radius: 5px;
+    }
+
+    nav ul li:hover a {
+      color: #fcee96;
+      font-weight: 600;
+    }
+
+    nav .profile-streak {
+      display: flex;
+      align-items: center;
+    }
+
+    nav .profile-streak img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    nav .streak {
+      background-color: #fcee96;
+      padding: 5px 10px;
+      border-radius: 20px;
+      color: black;
+      font-size: 14px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    nav .streak .emoji {
+      margin-left: 5px;
+    }
+
+
+    .container {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .location-form {
+      margin-bottom: 20px;
+    }
+    .therapist-card {
+      background-color: #fff;
+      margin-bottom: 15px;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .therapist-card h3 {
+      margin: 0 0 10px;
+    }
+    .therapist-card p {
+      margin: 5px 0;
+    }
+    .therapist-card a {
+      color: #534566;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .therapist-card a:hover {
+      color: #cd7671;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="/jar.png" alt="Mood Jar Logo">
+    <h1 class="logo-title">MOOD JAR</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="home.html">Dashboard</a></li>
+      <li><a href="journal.html">Journal</a></li>
+      <li><a href="checkers.html">Checkers</a></li>
+      <li><a href="articles.html">Articles</a></li>
+      <li class="active"><a href="therapists.html">Therapists</a></li>
+    </ul>
+    <div class="profile-streak">
+      <img src="https://via.placeholder.com/40" alt="Profile Icon">
+      <div class="streak">
+        1
+        <span class="emoji">✨</span>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <h2>Therapists Near You</h2>
+  </header>
+
+  <div class="container">
+    <div class="location-form">
+      <h2>Enter Your Location to Find Therapists</h2>
+      <form id="location-form">
+        <label for="location">City or Zip Code:</label>
+        <input type="text" id="location" name="location" placeholder="Enter city or zip code" required>
+        <button type="submit">Find Therapists</button>
+      </form>
+    </div>
+
+    <div id="therapists-list">
+      <!-- Therapist cards will appear here after location is submitted -->
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('location-form');
+    const therapistsList = document.getElementById('therapists-list');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const location = document.getElementById('location').value;
+      fetchTherapists(location);
+    });
+
+    function fetchTherapists(location) {
+      // Example data, you can replace with actual data fetch or API
+      const therapists = [
+        {
+          name: 'John Doe',
+          specialization: 'Cognitive Behavioral Therapy',
+          location: 'New York, NY',
+          phone: '123-456-7890',
+          website: 'https://example.com/johndoe'
+        },
+        {
+          name: 'Jane Smith',
+          specialization: 'Anxiety and Stress Management',
+          location: 'New York, NY',
+          phone: '987-654-3210',
+          website: 'https://example.com/janesmith'
+        }
+        // Add more therapists as needed
+      ];
+
+      const filteredTherapists = therapists.filter(therapist => therapist.location.toLowerCase().includes(location.toLowerCase()));
+
+      if (filteredTherapists.length > 0) {
+        therapistsList.innerHTML = '';
+        filteredTherapists.forEach(therapist => {
+          const card = document.createElement('div');
+          card.className = 'therapist-card';
+          card.innerHTML = `
+            <h3>${therapist.name}</h3>
+            <p>Specialization: ${therapist.specialization}</p>
+            <p>Location: ${therapist.location}</p>
+            <p>Phone: ${therapist.phone}</p>
+            <a href="${therapist.website}" target="_blank">Visit Website</a>
+          `;
+          therapistsList.appendChild(card);
+        });
+      } else {
+        therapistsList.innerHTML = '<p>No therapists found in this location.</p>';
+      }
+    }
+
+    window.onload = function () {
+      const profile = JSON.parse(localStorage.getItem('profile'));
+
+      if (profile && profile.icon) {
+        const profileImage = document.querySelector('.profile-streak img');
+        profileImage.src = profile.icon; // Set selected profile icon
+        profileImage.alt = `${profile.nickname}'s Profile Icon`;
+      }
+    };
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    /* Body styles */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f8f3;
+    }
+
+    /* Header container for logo and title */
+    header {
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      background-color: #f8f8f3;
+    }
+
+    /* Logo styling */
+    header img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    /* Title styling */
+    header h1.logo-title {
+      color: #cd7671;
+      font-size: 20px;
+      margin: 0px;
+    }
+
+    /* Navigation bar styles */
+    nav {
+      background-color: #534566;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #f8efba;
+      font-size: 16px;
+      font-weight: 400;
+      padding-bottom: 5px;
+      transition: color 0.3s ease, font-weight 0.3s ease;
+    }
+
+    nav ul li.active a {
+      color: #fcee96;
+      font-weight: bold;
+      border-bottom: 5px solid #fcee96;
+      padding-bottom: 3px;
+      border-radius: 5px;
+    }
+
+    nav ul li:hover a {
+      color: #fcee96;
+      font-weight: 600;
+    }
+
+    nav .profile-streak {
+      display: flex;
+      align-items: center;
+    }
+
+    nav .profile-streak img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    nav .streak {
+      background-color: #fcee96;
+      padding: 5px 10px;
+      border-radius: 20px;
+      color: black;
+      font-size: 14px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    nav .streak .emoji {
+      margin-left: 5px;
+    }
+
+    /* Main content area */
+    .main-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Jar container */
+    .jar-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-right: 20px;
+      position: relative;
+    }
+
+    .jar {
+      width: 150px;
+      height: 250px;
+      border: 3px solid rgba(122, 154, 177, 0.5); /* Jar outline color with transparency */
+      border-radius: 10px 10px 50px 50px;
+      background: linear-gradient(to bottom, rgba(176, 196, 222, 0.5), rgba(106, 140, 175, 0.5)); /* Transparent muted blue */
+      position: relative;
+      overflow: hidden;
+      padding-top: 20px;
+    }
+
+    /* "How are you feeling today?" text */
+    .prompt-text {
+      font-size: 24px; /* Increased text size */
+      color: #534566;
+      margin-bottom: 10px;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    /* Emoji row */
+    .emoji-row {
+      display: flex;
+      gap: 15px;
+      cursor: pointer;
+      margin-left: 20px;
+    }
+
+    .emoji {
+      width: 40px; /* Increased emoji size */
+      height: 40px;
+      transition: transform 0.3s ease;
+    }
+
+    /* Stacking emojis in jar */
+    .jar .emoji-inside {
+      position: absolute;
+      animation: fall 1s ease forwards;
+      width: 35px; /* Inside emoji size */
+      height: 35px;
+      opacity: 1;
+    }
+
+    /* Chatbot section */
+    .chatbot-container {
+      max-width: 600px;
+      margin: 40px auto 20px;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f8f8f3;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .chatbot-container h2 {
+      font-size: 22px;
+      color: #534566;
+    }
+
+    .chatbot-container textarea {
+      width: 100%;
+      height: 80px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      font-family: 'Poppins', sans-serif;
+      resize: none;
+    }
+
+    .chatbot-container button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #cd7671;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .chatbot-container button:hover {
+      background-color: #b25c5b;
+    }
+
+    .chat-output {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #e0dce5;
+      border-radius: 5px;
+    }
+
+    /* Emoji fall animation */
+    @keyframes fall {
+      0% { transform: translateY(-150px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    
+  </style>
+</head>
+<body>
+
+  <script src="js/mood-jar.js"></script>
+
+
+  <header>
+    <img src="jar.png" alt="Mood Jar Logo">
+    <h1 class="logo-title">MOOD JAR</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li class="active"><a href="home.html">Dashboard</a></li>
+      <li><a href="journal.html">Journal</a></li>
+      <li><a href="checkers.html">Checkers</a></li>
+      <li><a href="articles.html">Articles</a></li>
+      <li><a href="therapists.html">Therapists</a></li>
+    </ul>
+    <div class="profile-streak">
+      <img src="https://via.placeholder.com/40" alt="Profile Icon">
+      <div class="streak"> 1 <span class="">  ✨</span></div>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <div class="jar-container">
+      <div class="jar" id="mood-jar"></div>
+    </div>
+    <div>
+      <div class="prompt-text">How are you feeling today?</div>
+      <div class="emoji-row">
+        <img class="emoji" src="excited.png" alt="Excited" onclick="addToJar('excited.png')">
+        <img class="emoji" src="joy.png" alt="Joy" onclick="addToJar('joy.png')">
+        <img class="emoji" src="okay.png" alt="Okay" onclick="addToJar('okay.png')">
+        <img class="emoji" src="sad.png" alt="Sad" onclick="addToJar('sad.png')">
+        <img class="emoji" src="angry.png" alt="Angry" onclick="addToJar('angry.png')">
+        <img class="emoji" src="depressed.png" alt="Depressed" onclick="addToJar('depressed.png')">
+        <img class="emoji" src="ill.png" alt="Ill" onclick="addToJar('ill.png')">
+      </div>
+    </div>
+  </div>
+
+  <!-- Chatbot Section -->
+  <div class="chatbot-container">
+    <h2>Do you wanna talk about it?</h2>
+    <textarea id="user-input" placeholder="Write something here..."></textarea>
+    <button onclick="startConversation()">Send</button>
+
+    <div id="chat-output" class="chat-output" style="display: none;"></div>
+  </div>
+
+  <script>
+    let yOffset = 30;
+
+    function addToJar(imageSrc) {
+      const jar = document.getElementById("mood-jar");
+      const emojiImg = document.createElement("img");
+
+      emojiImg.src = imageSrc;
+      emojiImg.className = "emoji-inside";
+      emojiImg.style.left = `${Math.random() * 80 + 20}px`;
+
+      jar.appendChild(emojiImg);
+
+      setTimeout(() => {
+        emojiImg.style.bottom = `${yOffset}px`;
+
+        if (yOffset <= 200) {
+          yOffset += 30;
+        }
+      }, 100);
+    }
+
+    let conversationStage = 0;
+
+    function startConversation() {
+      const userInput = document.getElementById("user-input").value;
+      const chatOutput = document.getElementById("chat-output");
+
+      if (userInput.trim()) {
+        chatOutput.innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
+        document.getElementById("user-input").value = "";
+
+        if (conversationStage === 0) {
+          chatOutput.innerHTML += `<p><strong>Bot:</strong> I hear you. Can you tell me a bit more about what's on your mind?</p>`;
+          conversationStage++;
+        } else if (conversationStage === 1) {
+          chatOutput.innerHTML += `<p><strong>Bot:</strong> That sounds tough. What has been helping you cope?</p>`;
+          conversationStage++;
+        } else if (conversationStage === 2) {
+          chatOutput.innerHTML += `<p><strong>Bot:</strong> Sometimes, talking about it helps. Are you feeling better?</p>`;
+          conversationStage = 0;
+        }
+
+        chatOutput.style.display = "block";
+      }
+    }
+
+    // Load profile image from localStorage
+    window.onload = function () {
+      const profile = JSON.parse(localStorage.getItem('profile'));
+
+      if (profile && profile.icon) {
+        const profileImage = document.querySelector('.profile-streak img');
+        profileImage.src = profile.icon; // Set selected profile icon
+        profileImage.alt = `${profile.nickname}'s Profile Icon`;
+      }
+    };
+  </script>
+</body>
+</html>

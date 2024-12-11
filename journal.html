@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Body styles */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f8f3;
+    }
+
+    /* Header container for logo and title */
+    header {
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      background-color: #f8f8f3;
+    }
+
+    /* Logo styling */
+    header img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    /* Title styling */
+    header h1.logo-title {
+      color: #cd7671;
+      font-size: 20px;
+      margin: 0px;
+    }
+
+   /* Navigation bar styles */
+   nav {
+      background-color: #534566;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #f8efba;
+      font-size: 16px;
+      font-weight: 400;
+      padding-bottom: 5px;
+      transition: color 0.3s ease, font-weight 0.3s ease;
+    }
+
+    nav ul li.active a {
+      color: #fcee96;
+      font-weight: bold;
+      border-bottom: 5px solid #fcee96;
+      padding-bottom: 3px;
+      border-radius: 5px;
+    }
+
+    nav ul li:hover a {
+      color: #fcee96;
+      font-weight: 600;
+    }
+
+    nav .profile-streak {
+      display: flex;
+      align-items: center;
+    }
+
+    nav .profile-streak img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    nav .streak {
+      background-color: #fcee96;
+      padding: 5px 10px;
+      border-radius: 20px;
+      color: black;
+      font-size: 14px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    nav .streak .emoji {
+      margin-left: 5px;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .notebook {
+      background-color: #ffffff;
+      border: 2px solid #534566;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .notebook textarea {
+      width: 100%;
+      height: 200px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      resize: none;
+      margin-bottom: 20px;
+    }
+    .notebook button {
+      background-color: #534566;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .notebook button:hover {
+      background-color: #422f47;
+    }
+    .entries {
+      margin-top: 30px;
+    }
+    .entry {
+      background-color: #f4f4f4;
+      padding: 10px;
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      font-size: 16px;
+      white-space: pre-wrap; /* Ensures line breaks in entries are preserved */
+    }
+    .entry .timestamp {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+    <header>
+        <img src="/jar.png" alt="Mood Jar Logo">
+        <h1 class="logo-title">MOOD JAR</h1>
+      </header>
+      
+  <!-- Navbar -->
+  <nav>
+    <ul>
+      <li><a href="home.html">Dashboard</a></li>
+      <li class="active"><a href="journal.html">Journal</a></li>
+      <li><a href="checkers.html">Checkers</a></li>
+      <li><a href="articles.html">Articles</a></li>
+      <li><a href="therapists.html">Therapists</a></li>
+    </ul>
+    <div class="profile-streak">
+      <img src="https://via.placeholder.com/40" alt="Profile Icon">
+      <div class="streak">1 <span class="emoji">✨</span></div>
+    </div>
+  </nav>
+
+  <!-- Container for the Journal -->
+  <div class="container">
+    <div class="notebook">
+      <h2>My Journal</h2>
+      <textarea id="journalEntry" placeholder="Write your thoughts..."></textarea>
+      <button onclick="saveEntry()">Save Entry</button>
+
+      <div class="entries" id="entriesContainer">
+        <h3>Your Past Entries:</h3>
+        <!-- Entries will be displayed here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Function to save journal entry
+    function saveEntry() {
+      const entryText = document.getElementById('journalEntry').value;
+      if (entryText.trim() === "") {
+        alert("Please write something before saving.");
+        return;
+      }
+
+      // Get current date and time
+      const timestamp = new Date().toLocaleString();
+
+      // Create entry with timestamp
+      const entry = {
+        text: entryText,
+        timestamp: timestamp
+      };
+
+      // Get saved entries from localStorage, or initialize an empty array if none exist
+      let entries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+
+      // Add the new entry to the array
+      entries.push(entry);
+
+      // Save the updated array back to localStorage
+      localStorage.setItem('journalEntries', JSON.stringify(entries));
+
+      // Clear the textarea
+      document.getElementById('journalEntry').value = '';
+
+      // Update the displayed entries
+      displayEntries();
+    }
+
+    // Function to display journal entries from localStorage
+    function displayEntries() {
+      const entriesContainer = document.getElementById('entriesContainer');
+      const entries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+
+      // Clear the container before adding new entries
+      entriesContainer.innerHTML = "<h3>Your Past Entries:</h3>";
+
+      // Display each entry with timestamp
+      entries.forEach(entry => {
+        const entryDiv = document.createElement('div');
+        entryDiv.classList.add('entry');
+
+        // Add timestamp to entry
+        const timestampDiv = document.createElement('div');
+        timestampDiv.classList.add('timestamp');
+        timestampDiv.textContent = entry.timestamp;
+        entryDiv.appendChild(timestampDiv);
+
+        // Add the actual text entry
+        entryDiv.appendChild(document.createTextNode(entry.text));
+
+        entriesContainer.appendChild(entryDiv);
+      });
+    }
+
+    // Display the entries on page load
+    window.onload = displayEntries;
+
+    window.onload = function () {
+      const profile = JSON.parse(localStorage.getItem('profile'));
+
+      if (profile && profile.icon) {
+        const profileImage = document.querySelector('.profile-streak img');
+        profileImage.src = profile.icon; // Set selected profile icon
+        profileImage.alt = `${profile.nickname}'s Profile Icon`;
+      }
+    };
+  </script>
+</body>
+</html>
